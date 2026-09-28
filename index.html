@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Electronic Tech Log</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+
+  <!-- EN-TÊTE / GESTION DE LA FLOTTE -->
+  <header class="app-header">
+    <div class="header-title">ELECTRONIC TECHNICAL LOGBOOK</div>
+    <div class="fleet-controls">
+      <label for="aircraftSelect"><strong>Avion sélectionné :</strong></label>
+      <select id="aircraftSelect" onchange="changeAircraft()"></select>
+      <button class="btn btn-add" onclick="addAircraft()">+ Ajouter Avion</button>
+      <button class="btn btn-danger" onclick="deleteAircraft()">- Supprimer</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- SECTIONS ET ONGLETS -->
+    <nav class="tabs">
+      <button class="tab-btn active" onclick="showTab('techlog')">Tech Log Vol</button>
+      <button class="tab-btn" onclick="showTab('defects')">Défauts & MEL</button>
+      <button class="tab-btn" onclick="showTab('maintenance')">Maintenance</button>
+      <button class="tab-btn" onclick="showTab('cabin')">Cabin Log</button>
+    </nav>
+
+    <!-- SECTION 1: TECH LOG VOL -->
+    <section id="techlog" class="tab-content active">
+      <div class="paper-section grid-3">
+        <div>
+          <label>N° Vol :</label>
+          <input type="text" id="flightNo" placeholder="ex: BA123">
+        </div>
+        <div>
+          <label>Départ / Arrivée :</label>
+          <input type="text" id="route" placeholder="LHR - MAD">
+        </div>
+        <div>
+          <label>Date :</label>
+          <input type="date" id="flightDate">
+        </div>
+      </div>
+
+      <div class="paper-section">
+        <h3>Carburant & Ravitaillement (Fuel Record)</h3>
+        <div class="grid-3">
+          <div><label>Departure Fuel (Kg) :</label><input type="number" id="fuelDep"></div>
+          <div><label>Arrival Fuel (Kg) :</label><input type="number" id="fuelArr"></div>
+          <div><label>Uplift (Litres/Kg) :</label><input type="number" id="fuelUplift"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: DÉFAUTS & MEL -->
+    <section id="defects" class="tab-content">
+      <div class="paper-section">
+        <h3>Signaler un Défaut / Entrée MEL</h3>
+        <div class="grid-2">
+          <input type="text" id="defectDesc" placeholder="Description du symptôme / défaut">
+          <input type="text" id="melRef" placeholder="Réf. MEL / Action">
+        </div>
+        <button class="btn btn-add" onclick="addDefect()" style="margin-top:10px;">Enregistrer Défaut</button>
+      </div>
+      <div class="paper-section">
+        <h3>Registre des Défauts Signalés</h3>
+        <ul id="defectsList" class="list-box"></ul>
+      </div>
+    </section>
+
+    <!-- SECTION 3: MAINTENANCE LOG -->
+    <section id="maintenance" class="tab-content">
+      <div class="paper-section">
+        <h3>Contrôles de Maintenance</h3>
+        <div class="checkbox-group">
+          <label><input type="checkbox" id="checkTransit"> ETOPS Transit Check Completed</label><br>
+          <label><input type="checkbox" id="checkDaily"> Daily Check Satisfactory</label>
+        </div>
+        <br>
+        <label>Action & Visa Mécanicien :</label>
+        <textarea id="maintNotes" rows="3" placeholder="Actioned IAW DIR..."></textarea>
+      </div>
+    </section>
+
+    <!-- SECTION 4: CABIN LOG -->
+    <section id="cabin" class="tab-content">
+      <div class="paper-section">
+        <h3>Journal Cabine (Cabin Defects)</h3>
+        <input type="text" id="cabinDefectText" placeholder="Problème siège, galley, IFE...">
+        <button class="btn btn-add" onclick="addCabinDefect()" style="margin-top:10px;">Ajouter Remarque Cabine</button>
+        <ul id="cabinList" class="list-box" style="margin-top:15px;"></ul>
+      </div>
+    </section>
+
+    <!-- BOUTON DE SAUVEGARDE GENERAL -->
+    <div style="text-align: right; margin-top: 15px;">
+      <button class="btn btn-save" onclick="saveCurrentAircraftData()">💾 SAUVEGARDER L'APPAREIL</button>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
